@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -102,8 +101,12 @@ public final class UniNodespace {
                 phase1.add(CompletableFuture.runAsync(() -> manager.updateForWorld(world), executor));
             }
         }
-        return CompletableFuture.allOf(phase1.toArray(new CompletableFuture[0])).thenRunAsync(UniNodespace::resetAllNetTrackers, executor)
-                                .thenCompose(v -> updateAllNetsAsync(executor)).exceptionally(UniNodespace::rethrowAsRuntime);
+
+        return CompletableFuture.allOf(phase1.toArray(new CompletableFuture[0]))
+                                .thenRunAsync(UniNodespace::resetAllNetTrackers, executor)
+                                .thenCompose(_ -> updateAllNetsAsync(executor))
+                                .thenRunAsync(UniNodespace::clearAllEmpty, executor)
+                                .exceptionally(UniNodespace::rethrowAsRuntime);
     }
 
     private static void resetAllNetTrackers() {
@@ -146,10 +149,13 @@ public final class UniNodespace {
     }
 
     private static void updateNetworks() {
-        for (PerTypeNodeManager<?, ?, ?, ?> manager : managers.values()) {
-            manager.resetTrackers();
-            manager.updateNetworks();
-        }
+        for (PerTypeNodeManager<?, ?, ?, ?> manager : managers.values()) manager.resetTrackers();
+        for (PerTypeNodeManager<?, ?, ?, ?> manager : managers.values()) manager.updateNetworks();
+        clearAllEmpty();
+    }
+
+    private static void clearAllEmpty() {
+        for (PerTypeNodeManager<?, ?, ?, ?> manager : managers.values()) manager.removeEmptyNets();
     }
 
     @SuppressWarnings("unchecked")
@@ -186,7 +192,7 @@ public final class UniNodespace {
         }
 
         private UniNodeWorld<N, L> getWorldManager(World world) {
-            return worlds.computeIfAbsent(world, k -> new UniNodeWorld<>());
+            return worlds.computeIfAbsent(world, _ -> new UniNodeWorld<>());
         }
 
         L getNode(World world, BlockPos pos) {
@@ -238,6 +244,10 @@ public final class UniNodespace {
             for (N net : activeNodeNets) {
                 net.resetTrackers();
             }
+        }
+
+        void removeEmptyNets() {
+            activeNodeNets.removeIf(net -> net.links.isEmpty());
         }
 
         void updateNetworks() {
