@@ -293,7 +293,7 @@ public class CivilianFeatures {
 			TileEntityBobble bobble = (TileEntityBobble) world.getTileEntity(new BlockPos(this.getXWithOffset(15 - 5, 4), this.getYWithOffset(1), this.getZWithOffset(15 - 5, 4)));
 
 			if(bobble != null) {
-				bobble.type = BobbleType.values()[rand.nextInt(BobbleType.values().length - 1) + 1];
+				bobble.type = BobbleType.VALUES[rand.nextInt(BobbleType.VALUES.length - 1) + 1];
 				bobble.markDirty();
 			}
 

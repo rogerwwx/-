@@ -503,7 +503,7 @@ abstract public class Component extends StructureComponent {
 		TileEntityBobble bobble = (TileEntityBobble) world.getTileEntity(pos);
 
 		if(bobble != null) {
-			bobble.type = BobbleType.values()[rand.nextInt(BobbleType.values().length - 1) + 1];
+			bobble.type = BobbleType.VALUES[rand.nextInt(BobbleType.VALUES.length - 1) + 1];
 			bobble.markDirty();
 		}
 	}

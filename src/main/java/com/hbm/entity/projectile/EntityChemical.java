@@ -410,7 +410,7 @@ public class EntityChemical extends EntityThrowableNT{
                 ChemicalStyle style = getStyle();
 
                 if (style == ChemicalStyle.BURNING || style == ChemicalStyle.GASFLAME) {
-                    for (EnumFacing dir : EnumFacing.values()) {
+                    for (EnumFacing dir : EnumFacing.VALUES) {
                         BlockPos offsetPos = pos.offset(dir);
                         if (world.isAirBlock(offsetPos)) {
                             Block fire = (type == Fluids.BALEFIRE) ? ModBlocks.balefire : Blocks.FIRE;
@@ -420,7 +420,7 @@ public class EntityChemical extends EntityThrowableNT{
                 }
 
                 if (this.isExtinguishing()) {
-                    for (EnumFacing dir : EnumFacing.values()) {
+                    for (EnumFacing dir : EnumFacing.VALUES) {
                         BlockPos offsetPos = pos.offset(dir);
                         if (world.getBlockState(offsetPos).getBlock() == Blocks.FIRE) {
                             world.setBlockToAir(offsetPos);

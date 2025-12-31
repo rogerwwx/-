@@ -65,7 +65,7 @@ public class BlockGlyphidSpawner extends BlockContainer implements IBlockMulti {
 
     @Override
     public @NotNull IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(TYPE, Type.values()[meta]);
+        return this.getDefaultState().withProperty(TYPE, Type.VALUES[meta]);
     }
 
     @Override
@@ -75,6 +75,8 @@ public class BlockGlyphidSpawner extends BlockContainer implements IBlockMulti {
 
     public enum Type implements IStringSerializable {
         BASE, INFESTED, RAD;
+
+        public static final Type[] VALUES = values();
 
         @Override
         public @NotNull String getName() {

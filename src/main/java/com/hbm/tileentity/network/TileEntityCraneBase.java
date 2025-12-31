@@ -118,7 +118,7 @@ public abstract class TileEntityCraneBase extends TileEntityMachineBase implemen
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         if(nbt.hasKey("CraneOutputOverride", Constants.NBT.TAG_BYTE)) {
-            outputOverride = EnumFacing.values()[nbt.getByte("CraneOutputOverride")];
+            outputOverride = EnumFacing.VALUES[nbt.getByte("CraneOutputOverride")];
         } else {
                 outputOverride = null;
         }

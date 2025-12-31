@@ -110,7 +110,7 @@ public class OreCave {
                             boolean shouldGen = false;
                             boolean canGenFluid = event.getRand().nextBoolean();
 
-                            for (EnumFacing dir : EnumFacing.values()) {
+                            for (EnumFacing dir : EnumFacing.VALUES) {
                                 BlockPos npos = pos.offset(dir);
                                 IBlockState neighborState = world.getBlockState(npos);
                                 Block neighborBlock = neighborState.getBlock();

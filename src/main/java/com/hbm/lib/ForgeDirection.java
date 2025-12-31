@@ -35,7 +35,6 @@ public enum ForgeDirection {
     public final int offsetZ;
     public final int flag;
     public static final ForgeDirection[] VALID_DIRECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
-    public static final int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};
     // Left hand rule rotation matrix for all possible axes of rotation
     public static final int[][] ROTATION_MATRIX = {
         {0, 1, 4, 5, 3, 2, 6},
@@ -56,7 +55,7 @@ public enum ForgeDirection {
     }
 
     public static ForgeDirection getOrientation(EnumFacing e){
-        return getOrientation(e.ordinal());
+        return VALID_DIRECTIONS[e.ordinal()];
     }
 
     public static ForgeDirection getOrientation(int id)
@@ -70,7 +69,7 @@ public enum ForgeDirection {
 
     public ForgeDirection getOpposite()
     {
-        return getOrientation(OPPOSITES[ordinal()]);
+        return getOrientation(ordinal() ^ 1);
     }
 
     public ForgeDirection getRotation(ForgeDirection axis)
@@ -88,7 +87,7 @@ public enum ForgeDirection {
     }
 
     public EnumFacing toEnumFacing() {
-        return this == UNKNOWN ? null : EnumFacing.values()[ordinal()];
+        return this == UNKNOWN ? null : EnumFacing.VALUES[ordinal()];
     }
     
     public float getRotationDegrees(){

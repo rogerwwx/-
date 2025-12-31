@@ -125,7 +125,7 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (int i = 1; i < BobbleType.values().length; i++) {
+        for (int i = 1; i < BobbleType.VALUES.length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }
@@ -136,7 +136,7 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
         world.setBlockState(pos, this.getDefaultState().withProperty(META, meta), 2);
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileEntityBobble bobble) {
-            bobble.type = BobbleType.values()[Math.abs(stack.getItemDamage()) % BobbleType.values().length];
+            bobble.type = BobbleType.VALUES[Math.abs(stack.getItemDamage()) % BobbleType.VALUES.length];
             bobble.markDirty();
         }
     }
@@ -182,7 +182,7 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
         @Override
         @SideOnly(Side.CLIENT)
         public void registerModels() {
-            for (int meta = 0; meta < BobbleType.values().length; meta++) {
+            for (int meta = 0; meta < BobbleType.VALUES.length; meta++) {
                 ModelLoader.setCustomModelResourceLocation(this, meta, new ModelResourceLocation(this.getRegistryName(), "inventory"));
             }
         }
@@ -222,6 +222,8 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
         MELLOW("MELLOWARPEGGIATION", "Mellow", "NBT Structures, industrial lighting, animation tools",
                 "Make something cool now, ask for permission later.", true, ScrapType.CARD_PROCESSOR),
         ABEL("Abel1502", "Abel1502", "Abilities GUI, optimizations and many QoL improvements", "NANTO SUBARASHII", true, ScrapType.CPU_REGISTER);
+
+        public static final BobbleType[] VALUES = values();
 
         public final String name;
         public final String label;
@@ -270,7 +272,7 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
         @Override
         public void readFromNBT(NBTTagCompound nbt) {
             super.readFromNBT(nbt);
-            this.type = BobbleType.values()[Math.abs(nbt.getByte("type")) % BobbleType.values().length];
+            this.type = BobbleType.VALUES[Math.abs(nbt.getByte("type")) % BobbleType.VALUES.length];
         }
 
         @Override
@@ -282,7 +284,7 @@ public class BlockBobble extends BlockContainer implements INBTBlockTransformabl
 
         @Override
         public void transformTE(World world, int coordBaseMode) {
-            type = BobbleType.values()[world.rand.nextInt(BobbleType.values().length - 1) + 1];
+            type = BobbleType.VALUES[world.rand.nextInt(BobbleType.VALUES.length - 1) + 1];
         }
 
         @Override

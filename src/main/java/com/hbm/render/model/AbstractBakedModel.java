@@ -83,7 +83,7 @@ public abstract class AbstractBakedModel implements IBakedModel {
     Vector3f from = new Vector3f(minX * 16.0f, minY * 16.0f, minZ * 16.0f);
     Vector3f to = new Vector3f(maxX * 16.0f, maxY * 16.0f, maxZ * 16.0f);
 
-    for (EnumFacing face : EnumFacing.values()) {
+    for (EnumFacing face : EnumFacing.VALUES) {
       BlockFaceUV uv = makeFaceUV(face, from, to);
       BlockPartFace partFace = new BlockPartFace(face, -1, "", uv);
       BakedQuad quad =

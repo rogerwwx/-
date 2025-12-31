@@ -74,7 +74,7 @@ public class TileEntityCableBaseNT extends TileEntityLoadedBase implements IEner
 
     private void refreshFENeighbors() {
         if (world == null) return;
-        for (EnumFacing facing : EnumFacing.values()) {
+        for (EnumFacing facing : EnumFacing.VALUES) {
             ForgeDirection dir = ForgeDirection.getOrientation(facing.getIndex());
             if (!this.canConnect(dir)) {
                 this.feNeighbors.remove(facing);

@@ -20,8 +20,8 @@ public class BlockConcreteColoredExtStairs extends BlockStairsEnumMeta {
     // and I'm lazy af to rename this
     @Override
     protected BlockBakeFrame[] generateBlockFrames(String registryName) {
-        BlockBakeFrame[] frames = new BlockBakeFrame[BlockConcreteColoredExt.EnumConcreteType.values().length];
-        for (BlockConcreteColoredExt.EnumConcreteType type : BlockConcreteColoredExt.EnumConcreteType.values()) {
+        BlockBakeFrame[] frames = new BlockBakeFrame[BlockConcreteColoredExt.EnumConcreteType.VALUES.length];
+        for (BlockConcreteColoredExt.EnumConcreteType type : BlockConcreteColoredExt.EnumConcreteType.VALUES) {
             String name = "hbm:blocks/concrete_colored_ext." + type.name().toLowerCase(Locale.US);
 
             frames[type.ordinal()] = new BlockBakeFrame(name) {

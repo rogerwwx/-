@@ -114,6 +114,8 @@ public class ItemChemicalDye extends ItemEnumMulti {
         ORANGE(15435844, "Orange"),
         WHITE(15790320, "White");
 
+        public static final EnumChemDye[] VALUES = values();
+
         public final int color;
         public final String dictName;
 

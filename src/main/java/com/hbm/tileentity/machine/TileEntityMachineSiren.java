@@ -91,7 +91,7 @@ public class TileEntityMachineSiren extends TileEntity implements ITickable, ICo
 	@Override
 	public void update() {
 		if(!world.isRemote) {
-			int id = Arrays.asList(TrackType.values()).indexOf(getCurrentType());
+			int id = Arrays.asList(TrackType.VALUES).indexOf(getCurrentType());
 
 			if(getCurrentType().name().equals(TrackType.NULL.name())) {
 				PacketDispatcher.wrapper.sendToDimension(new TESirenPacket(pos.getX(), pos.getY(), pos.getZ(), id, false), world.provider.getDimension());

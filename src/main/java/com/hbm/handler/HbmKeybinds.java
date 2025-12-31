@@ -133,7 +133,9 @@ public class HbmKeybinds {
 		TOOL_ALT,
 		GUN_PRIMARY,
 		GUN_SECONDARY,
-		GUN_TERTIARY
+		GUN_TERTIARY;
+
+        public static final EnumKeybind[] VALUES = values();
 	}
 
 	/** Handles keybind overlap. Make sure this runs first before referencing the keybinds set by the extprops */
@@ -198,7 +200,7 @@ public class HbmKeybinds {
 		EntityPlayer player = MainRegistry.proxy.me();
 		HbmCapability.IHBMData props = HbmCapability.getData(player);
 
-		for(EnumKeybind key : EnumKeybind.values()) {
+		for(EnumKeybind key : EnumKeybind.VALUES) {
 			boolean last = props.getKeyPressed(key);
 			boolean current = MainRegistry.proxy.getIsKeyPressed(key);
 

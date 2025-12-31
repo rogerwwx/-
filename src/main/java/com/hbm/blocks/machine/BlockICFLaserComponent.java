@@ -13,7 +13,7 @@ public class BlockICFLaserComponent extends BlockEnumMeta {
 
     @Override
     protected BlockBakeFrame[] generateBlockFrames(String registryName) {
-        EnumICFPart[] parts = EnumICFPart.values();
+        EnumICFPart[] parts = EnumICFPart.VALUES;
         BlockBakeFrame[] frames = new BlockBakeFrame[parts.length];
 
         for (EnumICFPart part : parts) {
@@ -35,6 +35,8 @@ public class BlockICFLaserComponent extends BlockEnumMeta {
         CELL,
         EMITTER,
         CAPACITOR,
-        TURBO
+        TURBO;
+
+        public static final EnumICFPart[] VALUES = values();
     }
 }

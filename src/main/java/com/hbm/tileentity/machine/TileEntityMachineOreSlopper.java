@@ -74,7 +74,7 @@ public class TileEntityMachineOreSlopper extends TileEntityMachineBase implement
     public int delay;
 
     public FluidTankNTM[] tanks;
-    public double[] ores = new double[BedrockOreType.values().length];
+    public double[] ores = new double[BedrockOreType.VALUES.length];
 
     private final UpgradeManager manager = new UpgradeManager();
 
@@ -130,7 +130,7 @@ public class TileEntityMachineOreSlopper extends TileEntityMachineBase implement
                 while(progress >= 1F && canSlop()) {
                     progress -= 1F;
 
-                    for(BedrockOreType type : BedrockOreType.values()) {
+                    for(BedrockOreType type : BedrockOreType.VALUES) {
                         ores[type.ordinal()] += (ItemBedrockOreBase.getOreAmount(inventory.getStackInSlot(2), type) * (1D + efficiency * 0.1));
                     }
 
@@ -162,7 +162,7 @@ public class TileEntityMachineOreSlopper extends TileEntityMachineBase implement
                 this.progress = 0;
             }
 
-            for(BedrockOreType type : BedrockOreType.values()) {
+            for(BedrockOreType type : BedrockOreType.VALUES) {
                 ItemStack output = ItemBedrockOreNew.make(BedrockOreGrade.BASE, type);
                 outer: while(ores[type.ordinal()] >= 1) {
                     for(int i = 3; i <= 8; i++) if(!inventory.getStackInSlot(i).isEmpty() && inventory.getStackInSlot(i).getItem() == output.getItem() && inventory.getStackInSlot(i).getItemDamage() == output.getItemDamage() && inventory.getStackInSlot(i).getCount() < output.getMaxStackSize()) {

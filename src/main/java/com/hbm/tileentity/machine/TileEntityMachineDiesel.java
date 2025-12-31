@@ -276,7 +276,7 @@ public class TileEntityMachineDiesel extends TileEntityMachinePolluting implemen
 
 		if(obj.has("D[:efficiency")) {
 			JsonArray array = obj.get("D[:efficiency").getAsJsonArray();
-			for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.values()) {
+			for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.VALUES) {
 				fuelEfficiency.put(grade, array.get(grade.ordinal()).getAsDouble());
 			}
 		}
@@ -288,12 +288,12 @@ public class TileEntityMachineDiesel extends TileEntityMachinePolluting implemen
 		writer.name("I:fuelCap").value(fluidCap);
 
 		String info = "Fuel grades in order: ";
-		for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.values()) info += grade.name() + " ";
+		for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.VALUES) info += grade.name() + " ";
 		info = info.trim();
 		writer.name("INFO").value(info);
 
 		writer.name("D[:efficiency").beginArray().setIndent("");
-		for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.values()) {
+		for(FT_Combustible.FuelGrade grade : FT_Combustible.FuelGrade.VALUES) {
 			double d = fuelEfficiency.containsKey(grade) ? fuelEfficiency.get(grade) : 0.0D;
 			writer.value(d);
 		}

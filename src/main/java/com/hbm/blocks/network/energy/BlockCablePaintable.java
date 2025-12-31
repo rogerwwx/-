@@ -389,7 +389,7 @@ public class BlockCablePaintable extends BlockBakeBase implements IToolable {
 
         private static ImmutableMap<EnumFacing, ImmutableList<BakedQuad>> buildFaceMap(TextureAtlasSprite sprite, int tintIndex, boolean offset) {
             ImmutableMap.Builder<EnumFacing, ImmutableList<BakedQuad>> builder = ImmutableMap.builder();
-            for (EnumFacing face : EnumFacing.values()) {
+            for (EnumFacing face : EnumFacing.VALUES) {
                 builder.put(face, ImmutableList.of(createQuad(face, sprite, tintIndex, offset)));
             }
             return builder.build();
@@ -397,7 +397,7 @@ public class BlockCablePaintable extends BlockBakeBase implements IToolable {
 
         private static ImmutableList<BakedQuad> flatten(Map<EnumFacing, ImmutableList<BakedQuad>> map) {
             ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-            for (EnumFacing face : EnumFacing.values()) {
+            for (EnumFacing face : EnumFacing.VALUES) {
                 builder.addAll(map.get(face));
             }
             return builder.build();

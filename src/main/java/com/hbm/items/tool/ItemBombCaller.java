@@ -49,7 +49,9 @@ public class ItemBombCaller extends ItemBakedBase implements IDynamicModels {
     STINGER,
     PIP,
     CLOUD,
-    NONE
+    NONE;
+
+      public static final EnumCallerType[] VALUES = values();
   }
 
   @Override
@@ -170,7 +172,7 @@ public class ItemBombCaller extends ItemBakedBase implements IDynamicModels {
   }
 
   private static EnumCallerType getTypeByIndex(int index) {
-    EnumCallerType[] values = EnumCallerType.values();
+    EnumCallerType[] values = EnumCallerType.VALUES;
     if (index < 0 || index >= values.length) {
       return EnumCallerType.NONE;
     }
@@ -180,7 +182,7 @@ public class ItemBombCaller extends ItemBakedBase implements IDynamicModels {
   @Override
   public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
     if (tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH)
-      for (int i = 0; i < EnumCallerType.values().length - 4; i++) {
+      for (int i = 0; i < EnumCallerType.VALUES.length - 4; i++) {
         ItemStack stack = new ItemStack(this, 1, i);
         items.add(stack);
       }
@@ -194,7 +196,7 @@ public class ItemBombCaller extends ItemBakedBase implements IDynamicModels {
   @Override
   @SideOnly(Side.CLIENT)
   public void registerModel() {
-    for (int i = 0; i < EnumCallerType.values().length - 1; i++) {
+    for (int i = 0; i < EnumCallerType.VALUES.length - 1; i++) {
       ModelLoader.setCustomModelResourceLocation(
           this,
           i,

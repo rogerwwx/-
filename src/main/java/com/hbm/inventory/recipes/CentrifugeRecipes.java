@@ -217,7 +217,7 @@ public class CentrifugeRecipes extends SerializableRecipe {
 				new ItemStack(ModItems.powder_boron_tiny, 1),
 				new ItemStack(ModItems.dust_tiny, 6)});
 
-		for(ItemBedrockOreNew.BedrockOreType type : ItemBedrockOreNew.BedrockOreType.values()) {
+		for(ItemBedrockOreNew.BedrockOreType type : ItemBedrockOreNew.BedrockOreType.VALUES) {
 
 			recipes.put(new ComparableStack(ItemBedrockOreNew.make(ItemBedrockOreNew.BedrockOreGrade.BASE, type)), new ItemStack[] {ItemBedrockOreNew.make(ItemBedrockOreNew.BedrockOreGrade.PRIMARY, type), new ItemStack(Blocks.GRAVEL)});
 			recipes.put(new ComparableStack(ItemBedrockOreNew.make(ItemBedrockOreNew.BedrockOreGrade.BASE_ROASTED, type)), new ItemStack[] {ItemBedrockOreNew.make(ItemBedrockOreNew.BedrockOreGrade.PRIMARY, type), new ItemStack(Blocks.GRAVEL)});

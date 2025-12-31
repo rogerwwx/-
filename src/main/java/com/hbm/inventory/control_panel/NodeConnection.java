@@ -67,7 +67,7 @@ public class NodeConnection extends NodeElement implements ITypableNode {
 			connection = sys.nodes.get(nodeIdx);
 		}
 		isInput = tag.getBoolean("in");
-		type = DataType.values()[tag.getInteger("T") % DataType.values().length];
+		type = DataType.VALUES[tag.getInteger("T") % DataType.VALUES.length];
 		defaultValue = DataValue.newFromNBT(tag.getTag("D"));
 		if(defaultValue == null){
 			type = DataType.NUMBER;

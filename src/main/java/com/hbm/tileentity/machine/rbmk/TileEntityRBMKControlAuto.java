@@ -91,7 +91,7 @@ public class TileEntityRBMKControlAuto extends TileEntityRBMKControl implements 
 		this.heatUpper = nbt.getDouble("heatUpper");
 		
 		if(nbt.hasKey("function"))
-			this.function = RBMKFunction.values()[nbt.getInteger("function")];
+			this.function = RBMKFunction.VALUES[nbt.getInteger("function")];
 		else
 			this.function = null;
 	}
@@ -128,15 +128,15 @@ public class TileEntityRBMKControlAuto extends TileEntityRBMKControl implements 
 		this.levelUpper = buf.readDouble();
 		this.heatLower = buf.readDouble();
 		this.heatUpper = buf.readDouble();
-		this.function = RBMKFunction.values()[buf.readByte()];
+		this.function = RBMKFunction.VALUES[buf.readByte()];
 	}
 
 	@Override
 	public void receiveControl(NBTTagCompound data) {
 		
 		if(data.hasKey("function")) {
-			int c = Math.abs(data.getInteger("function")) % RBMKColor.values().length;
-			this.function = RBMKFunction.values()[c];
+			int c = Math.abs(data.getInteger("function")) % RBMKColor.VALUES.length;
+			this.function = RBMKFunction.VALUES[c];
 			
 		} else {
 
@@ -152,7 +152,9 @@ public class TileEntityRBMKControlAuto extends TileEntityRBMKControl implements 
 	public enum RBMKFunction {
 		LINEAR,
 		QUAD_UP,
-		QUAD_DOWN
+		QUAD_DOWN;
+
+        public static final RBMKFunction[] VALUES = values();
 	}
 
 	@Override

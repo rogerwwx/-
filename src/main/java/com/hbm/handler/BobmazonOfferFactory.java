@@ -49,7 +49,7 @@ public class BobmazonOfferFactory {
 		standard.add(new Offer(new ItemStack(ModBlocks.plant_flower, 1, PlantEnums.EnumFlowerPlantType.HEMP.ordinal()), Requirement.STEEL, 4, 10));
 		standard.add(new Offer(new ItemStack(ModBlocks.plant_flower, 1, PlantEnums.EnumFlowerPlantType.MUSTARD_WILLOW_0.ordinal()), Requirement.NUCLEAR, 64, 8));
 		//deco
-		for(BlockConcreteColoredExt.EnumConcreteType conc : BlockConcreteColoredExt.EnumConcreteType.values()) standard.add(new Offer(new ItemStack(ModBlocks.concrete_colored_ext, 16, conc.ordinal()), Requirement.CHEMICS, 4));
+		for(BlockConcreteColoredExt.EnumConcreteType conc : BlockConcreteColoredExt.EnumConcreteType.VALUES) standard.add(new Offer(new ItemStack(ModBlocks.concrete_colored_ext, 16, conc.ordinal()), Requirement.CHEMICS, 4));
 		//for(SnowglobeType globe : SnowglobeType.values()) standard.add(new Offer(new ItemStack(ModBlocks.snowglobe, 1, globe.ordinal()), Requirement.CHEMICS, 128));
 		//for(int i = 1; i < PlushieType.values().length; i++) standard.add(new Offer(new ItemStack(ModBlocks.plushie, 1, i), Requirement.OIL, 16, i < 3 ? 10 : 0));
 

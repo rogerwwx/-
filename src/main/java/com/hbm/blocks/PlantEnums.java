@@ -34,6 +34,7 @@ public class PlantEnums {
         MUSTARD_WILLOW_4_LOWER,
         MUSTARD_WILLOW_4_UPPER,
         ;
+        public static final EnumTallPlantType[] VALUES = values();
         public final boolean needsOil;
         EnumTallPlantType(boolean needsOil){ this.needsOil = needsOil;}
         EnumTallPlantType(){ this.needsOil = true;}

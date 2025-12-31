@@ -275,8 +275,8 @@ public class NTMClientRegistry {
     @SubscribeEvent
     public void registerModels(ModelRegistryEvent event) {
         int i = 0;
-        ResourceLocation[] list = new ResourceLocation[SpecialContainerFillLists.EnumCell.values().length];
-        for (SpecialContainerFillLists.EnumCell e : SpecialContainerFillLists.EnumCell.values()) {
+        ResourceLocation[] list = new ResourceLocation[SpecialContainerFillLists.EnumCell.VALUES.length];
+        for (SpecialContainerFillLists.EnumCell e : SpecialContainerFillLists.EnumCell.VALUES) {
             list[i] = e.getResourceLocation();
             i++;
         }
@@ -367,7 +367,7 @@ public class NTMClientRegistry {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
         } else if (item == ModItems.siren_track) {
-            for (int i = 0; i < ItemCassette.TrackType.values().length; i++) {
+            for (int i = 0; i < ItemCassette.TrackType.VALUES.length; i++) {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
         } else if (item == ModItems.ingot_u238m2) {
@@ -381,10 +381,10 @@ public class NTMClientRegistry {
             for (int i = 0; i < 16; i++)
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName().toString() + i, "inventory"));
         } else if (item == Item.getItemFromBlock(ModBlocks.brick_jungle_trap)) {
-            for (int i = 0; i < TrappedBrick.Trap.values().length; i++)
+            for (int i = 0; i < TrappedBrick.Trap.VALUES.length; i++)
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
         } else if (item instanceof ItemGuideBook) {
-            for (int i = 0; i < ItemGuideBook.BookType.values().length; i++)
+            for (int i = 0; i < ItemGuideBook.BookType.VALUES.length; i++)
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
         } else if (item instanceof ItemHot) {
             for (int i = 0; i < 15; i++)
@@ -397,11 +397,11 @@ public class NTMClientRegistry {
                 }
             }
         } else if (item instanceof ItemWasteLong) {
-            for (int i = 0; i < ItemWasteLong.WasteClass.values().length; i++) {
+            for (int i = 0; i < ItemWasteLong.WasteClass.VALUES.length; i++) {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
         } else if (item instanceof ItemWasteShort) {
-            for (int i = 0; i < ItemWasteShort.WasteClass.values().length; i++) {
+            for (int i = 0; i < ItemWasteShort.WasteClass.VALUES.length; i++) {
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
         } else if (item == ModItems.coin_siege) {
@@ -430,12 +430,12 @@ public class NTMClientRegistry {
         ItemMold.bakeModels(evt);
         IDynamicModels.bakeModels(evt);
 
-        for (SpecialContainerFillLists.EnumCanister e : SpecialContainerFillLists.EnumCanister.values()) {
+        for (SpecialContainerFillLists.EnumCanister e : SpecialContainerFillLists.EnumCanister.VALUES) {
             Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
             if (o instanceof IBakedModel)
                 e.putRenderModel((IBakedModel) o);
         }
-        for (SpecialContainerFillLists.EnumCell cellType : SpecialContainerFillLists.EnumCell.values()) {
+        for (SpecialContainerFillLists.EnumCell cellType : SpecialContainerFillLists.EnumCell.VALUES) {
             FluidType fluid = cellType.getFluid();
             int meta = (fluid == null) ? 0 : fluid.getID();
             ModelLoader.setCustomModelResourceLocation(
@@ -444,7 +444,7 @@ public class NTMClientRegistry {
                     cellType.getResourceLocation()
             );
         }
-        for (SpecialContainerFillLists.EnumGasCanister e : SpecialContainerFillLists.EnumGasCanister.values()) {
+        for (SpecialContainerFillLists.EnumGasCanister e : SpecialContainerFillLists.EnumGasCanister.VALUES) {
             Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
             if (o instanceof IBakedModel)
                 e.putRenderModel((IBakedModel) o);

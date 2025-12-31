@@ -17,7 +17,7 @@ public class NodeBoolean extends Node {
             if (op != null) setOperation(op);
             return null;
         }, () -> op.name());
-        for (BoolOperation op : BoolOperation.values()) {
+        for (BoolOperation op : BoolOperation.VALUES) {
             opSelector.list.addItems(op.name());
         }
         this.otherElements.add(opSelector);
@@ -44,7 +44,7 @@ public class NodeBoolean extends Node {
 
     @Override
     public void readFromNBT(NBTTagCompound tag, NodeSystem sys) {
-        op = BoolOperation.values()[tag.getInteger("op")%BoolOperation.values().length];
+        op = BoolOperation.VALUES[tag.getInteger("op")%BoolOperation.VALUES.length];
         super.readFromNBT(tag, sys);
     }
 
@@ -107,8 +107,10 @@ public class NodeBoolean extends Node {
         NOR,
         XNOR;
 
+        public static final BoolOperation[] VALUES = values();
+
         public static BoolOperation getByName(String name) {
-            for (BoolOperation o : BoolOperation.values()) {
+            for (BoolOperation o : BoolOperation.VALUES) {
                 if (o.name().equals(name)) {
                     return o;
                 }

@@ -31,7 +31,7 @@ public class ItemPistons extends ItemEnumMulti {
       tooltip.add(
           ChatFormatting.YELLOW
               + "-"
-              + I18nUtil.resolveKey(FT_Combustible.FuelGrade.values()[i].getGrade())
+              + I18nUtil.resolveKey(FT_Combustible.FuelGrade.VALUES[i].getGrade())
               + ": "
               + ChatFormatting.RED
               + (int) (type.eff[i] * 100)
@@ -48,7 +48,7 @@ public class ItemPistons extends ItemEnumMulti {
     public final double[] eff;
 
     EnumPistonType(double... eff) {
-      this.eff = new double[Math.min(FT_Combustible.FuelGrade.values().length, eff.length)];
+      this.eff = new double[Math.min(FT_Combustible.FuelGrade.VALUES.length, eff.length)];
       System.arraycopy(eff, 0, this.eff, 0, eff.length);
     }
   }

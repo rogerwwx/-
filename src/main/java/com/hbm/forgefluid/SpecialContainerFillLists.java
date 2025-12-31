@@ -34,7 +34,9 @@ public class SpecialContainerFillLists {
 		NAPHTHA(Fluids.NAPHTHA, new ModelResourceLocation(Tags.MODID + ":canister_naphtha", "inventory")),
 		LIGHTOIL(Fluids.LIGHTOIL, new ModelResourceLocation(Tags.MODID + ":canister_lightoil", "inventory")),
 		GASOLINE(Fluids.GASOLINE, new ModelResourceLocation(Tags.MODID + ":canister_gasoline", "inventory"));
-		
+
+        public static final EnumCanister[] VALUES = values();
+
 		private FluidType fluid;
 		private Pair<ModelResourceLocation, IBakedModel> renderPair;
 		private String translateKey;
@@ -62,7 +64,7 @@ public class SpecialContainerFillLists {
 		public static boolean contains(FluidType f){
 			if(f == null)
 				return false;
-			for(EnumCanister e : EnumCanister.values()){
+			for(EnumCanister e : EnumCanister.VALUES){
 				if(e.getFluid() == f)
 					return true;
 			}
@@ -71,7 +73,7 @@ public class SpecialContainerFillLists {
 		public static EnumCanister getEnumFromFluid(FluidType f){
 			if(f == null || f == Fluids.NONE)
 				return EnumCanister.EMPTY;
-			for(EnumCanister e : EnumCanister.values()){
+			for(EnumCanister e : EnumCanister.VALUES){
 				if(e.getFluid() == f){
 					return e;
 				}
@@ -79,9 +81,9 @@ public class SpecialContainerFillLists {
 			return null;
 		}
 		public static FluidType[] getFluids() {
-			FluidType[] f = new FluidType[EnumCanister.values().length];
-			for(int i = 0; i < EnumCanister.values().length; i ++){
-				f[i] = EnumCanister.values()[i].getFluid();
+			FluidType[] f = new FluidType[EnumCanister.VALUES.length];
+			for(int i = 0; i < EnumCanister.VALUES.length; i ++){
+				f[i] = EnumCanister.VALUES[i].getFluid();
 			}
 			return f;
 		}
@@ -96,17 +98,18 @@ public class SpecialContainerFillLists {
 		TRITIUM(Fluids.TRITIUM, new ModelResourceLocation(Tags.MODID + ":cell_tritium", "inventory")),
 		SAS3(Fluids.SAS3, new ModelResourceLocation(Tags.MODID + ":cell_sas3", "inventory")),
 		ANTISCHRABIDIUM(Fluids.ASCHRAB, new ModelResourceLocation(Tags.MODID + ":cell_anti_schrabidium", "inventory"));
+        public static final EnumCell[] VALUES = values();
 
 		private static final Map<FluidType, EnumCell> FLUID_TO_CELL_MAP;
 		private static final Set<FluidType> VALID_FLUIDS;
 		private static final FluidType[] FLUID_ARRAY;
 
 		static {
-			FLUID_TO_CELL_MAP = Arrays.stream(values()).filter(e -> e.fluid != null)
+			FLUID_TO_CELL_MAP = Arrays.stream(VALUES).filter(e -> e.fluid != null)
 					.collect(Collectors.toMap(EnumCell::getFluid, e -> e));
 
 			VALID_FLUIDS = FLUID_TO_CELL_MAP.keySet();
-			FLUID_ARRAY = Arrays.stream(values()).map(EnumCell::getFluid).toArray(FluidType[]::new);
+			FLUID_ARRAY = Arrays.stream(VALUES).map(EnumCell::getFluid).toArray(FluidType[]::new);
 		}
 		private final FluidType fluid;
 		private final Pair<ModelResourceLocation, IBakedModel> renderPair;
@@ -162,7 +165,8 @@ public class SpecialContainerFillLists {
 		DEUTERIUM(Fluids.DEUTERIUM, new ModelResourceLocation(Tags.MODID + ":gas_deuterium", "inventory")),
 		TRITIUM(Fluids.TRITIUM, new ModelResourceLocation(Tags.MODID + ":gas_tritium", "inventory")),
 		OXYGEN(Fluids.OXYGEN, new ModelResourceLocation(Tags.MODID + ":gas_oxygen", "inventory"));
-		
+        public static final EnumGasCanister[] VALUES = values();
+
 		private FluidType fluid;
 		private Pair<ModelResourceLocation, IBakedModel> renderPair;
 		private String translateKey;
@@ -190,16 +194,16 @@ public class SpecialContainerFillLists {
 		public static boolean contains(FluidType f){
 			if(f == null)
 				return false;
-			for(EnumGasCanister e : EnumGasCanister.values()){
+			for(EnumGasCanister e : EnumGasCanister.VALUES){
 				if(e.getFluid() == f)
 					return true;
 			}
 			return false;
 		}
 		public static FluidType[] getFluids() {
-			FluidType[] f = new FluidType[EnumGasCanister.values().length];
-			for(int i = 0; i < EnumGasCanister.values().length; i ++){
-				f[i] = EnumGasCanister.values()[i].getFluid();
+			FluidType[] f = new FluidType[EnumGasCanister.VALUES.length];
+			for(int i = 0; i < EnumGasCanister.VALUES.length; i ++){
+				f[i] = EnumGasCanister.VALUES[i].getFluid();
 			}
 			return f;
 		}

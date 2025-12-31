@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class PermaSyncHandler {
 	
 	public static IntOpenHashSet boykissers = new IntOpenHashSet();
-	public static float[] pollution = new float[PollutionType.values().length];
+	public static float[] pollution = new float[PollutionType.VALUES.length];
 
 	public static void writePacket(ByteBuf buf, World world, EntityPlayerMP player) {
 		
@@ -54,7 +54,7 @@ public class PermaSyncHandler {
 		/// POLLUTION ///
 		PollutionData pollution = PollutionHandler.getPollutionData(world, player.getPosition());
 		if(pollution == null) pollution = new PollutionData();
-		for(int i = 0; i < PollutionType.values().length; i++) {
+		for(int i = 0; i < PollutionType.VALUES.length; i++) {
 			buf.writeFloat(pollution.pollution[i]);
 		}
 		/// POLLUTION ///
@@ -97,7 +97,7 @@ public class PermaSyncHandler {
 		/// SHITTY MEMES ///
 
 		/// POLLUTION ///
-		for(int i = 0; i < PollutionType.values().length; i++) {
+		for(int i = 0; i < PollutionType.VALUES.length; i++) {
 			pollution[i] = buf.readFloat();
 		}
 		/// POLLUTION ///

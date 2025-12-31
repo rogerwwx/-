@@ -59,7 +59,7 @@ public class ItemConveyorWand extends Item implements ILookOverlay {
 
     public static ConveyorType getType(ItemStack stack) {
         if (stack.isEmpty()) return ConveyorType.REGULAR;
-        return ConveyorType.values()[Math.min(stack.getItemDamage(), ConveyorType.values().length - 1)];
+        return ConveyorType.VALUES[Math.min(stack.getItemDamage(), ConveyorType.VALUES.length - 1)];
     }
 
     public static Block getConveyorBlock(ConveyorType type) {
@@ -186,7 +186,7 @@ public class ItemConveyorWand extends Item implements ILookOverlay {
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (this.isInCreativeTab(tab)) {
-            for (ConveyorType type : ConveyorType.values()) {
+            for (ConveyorType type : ConveyorType.VALUES) {
                 items.add(new ItemStack(this, 1, type.ordinal()));
             }
         }
@@ -416,6 +416,8 @@ public class ItemConveyorWand extends Item implements ILookOverlay {
         REGULAR,
         EXPRESS,
         DOUBLE,
-        TRIPLE
+        TRIPLE;
+
+        public static final ConveyorType[] VALUES = values();
     }
 }

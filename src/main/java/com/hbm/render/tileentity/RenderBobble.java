@@ -586,7 +586,7 @@ public class RenderBobble extends TileEntitySpecialRenderer<TileEntityBobble> im
 
             public void renderCommon(ItemStack stack) {
                 GlStateManager.scale(0.5, 0.5, 0.5);
-                RenderBobble.instance.renderBobble(BobbleType.values()[stack.getItemDamage()]);
+                RenderBobble.instance.renderBobble(BobbleType.VALUES[stack.getItemDamage()]);
             }
 
             public void renderGround() {

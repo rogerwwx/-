@@ -103,7 +103,7 @@ public class ItemWatzPellet extends ItemEnumMulti implements IDynamicModels {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerModel() {
-        for (int i = 0; i < EnumWatzType.values().length; i++) {
+        for (int i = 0; i < EnumWatzType.VALUES.length; i++) {
             if (this.isDepleted) {
                 ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(Tags.MODID + ":items/watz_pellet_depleted-" + i, "inventory"));
             } else {
@@ -116,8 +116,8 @@ public class ItemWatzPellet extends ItemEnumMulti implements IDynamicModels {
     @Override
     public void registerSprite(TextureMap map) {
         for (int j = 0; j <= 1; j++) {
-            for (int i = 0; i < EnumWatzType.values().length; i++) {
-                EnumWatzType type = EnumWatzType.values()[i];
+            for (int i = 0; i < EnumWatzType.VALUES.length; i++) {
+                EnumWatzType type = EnumWatzType.VALUES[i];
                 ResourceLocation spriteLoc = new ResourceLocation(Tags.MODID, "items/watz_pellet" + (isDepleted ? "_depleted-" + i : "-" + i));
                 int light = isDepleted ? desaturate(type.colorLight) : type.colorLight;
                 int dark = isDepleted ? desaturate(type.colorDark) : type.colorDark;
@@ -133,7 +133,7 @@ public class ItemWatzPellet extends ItemEnumMulti implements IDynamicModels {
         for (int j = 0; j <= 1; j++) {
             try {
                 IModel baseModel = ModelLoaderRegistry.getModel(new ResourceLocation("minecraft", "item/generated"));
-                for (int i = 0; i < EnumWatzType.values().length; i++) {
+                for (int i = 0; i < EnumWatzType.VALUES.length; i++) {
                     ResourceLocation spriteLoc = new ResourceLocation(Tags.MODID, "items/watz_pellet" + (isDepleted ? "_depleted-" + i : "-" + i));
                     IModel retexturedModel = baseModel.retexture(
                             ImmutableMap.of(
@@ -219,6 +219,8 @@ public class ItemWatzPellet extends ItemEnumMulti implements IDynamicModels {
 
         CF252(0x7879B4, 0x4D4E89, 1_050, 120, 0.0015D, new FunctionLinear(1.8D), new FunctionSqrt(8.85D / 28.8D).withOff(10D * 10D), null),
         ES253(0xB9BFB2, 0x594E44, 3_750, 70, 0.0001D, new FunctionLinear(1.3D), new FunctionSqrt(7.0D / 27.7D).withOff(10D * 10D), null);
+
+        public static final EnumWatzType[] VALUES = values();
 
         public double yield = 500_000_000;
         public final int colorLight;

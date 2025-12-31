@@ -38,11 +38,11 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 	}
 
 	public void setColor(int color) {
-		RBMKColor new_color = RBMKColor.values()[color];
+		RBMKColor new_color = RBMKColor.VALUES[color];
 		this.color = new_color;
 	}
 	public boolean isSameColor(int color) {
-		return this.color == RBMKColor.values()[color];
+		return this.color == RBMKColor.VALUES[color];
 	}
 
 	@Override
@@ -87,9 +87,9 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 		}
 		
 		if(data.hasKey("color")) {
-			int c = Math.abs(data.getInteger("color")) % RBMKColor.values().length; //to stop naughty kids from sending packets that crash the server
+			int c = Math.abs(data.getInteger("color")) % RBMKColor.VALUES.length; //to stop naughty kids from sending packets that crash the server
 			
-			RBMKColor newCol = RBMKColor.values()[c];
+			RBMKColor newCol = RBMKColor.VALUES[c];
 			
 			if(newCol == this.color) {
 				this.color = null;
@@ -109,7 +109,7 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 			this.startingLevel = nbt.getDouble("startingLevel");
 		
 		if(nbt.hasKey("color"))
-			this.color = RBMKColor.values()[nbt.getInteger("color")];
+			this.color = RBMKColor.VALUES[nbt.getInteger("color")];
 		else
 			this.color = null;
 	}
@@ -140,7 +140,7 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 		this.startingLevel = buf.readDouble();
 		if(buf.isReadable(1)) {
 			int color = buf.readInt();
-			this.color = RBMKColor.values()[MathHelper.clamp(color, 0, RBMKColor.values().length)];
+			this.color = RBMKColor.VALUES[MathHelper.clamp(color, 0, RBMKColor.VALUES.length)];
 		}
 	}
 	
@@ -149,7 +149,9 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 		YELLOW,
 		GREEN,
 		BLUE,
-		PURPLE
+		PURPLE;
+
+        public static final RBMKColor[] VALUES = values();
 	}
 
 	@Override
@@ -191,7 +193,7 @@ public class TileEntityRBMKControlManual extends TileEntityRBMKControl implement
 			markDirty();
 		}
 		if (e.name.equals("rbmk_ctrl_set_color")) {
-			this.color = RBMKColor.values()[(int) (e.vars.get("color").getNumber()) % RBMKColor.values().length - 1];
+			this.color = RBMKColor.VALUES[(int) (e.vars.get("color").getNumber()) % RBMKColor.VALUES.length - 1];
 		}
 	}
 

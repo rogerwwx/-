@@ -51,10 +51,12 @@ public class ItemAmmoHIMARS extends Item implements IMetaItemTesr {
     SMALL_LAVA,
     SMALL_MINI_NUKE,
     LARGE,
-    LARGE_TB
+    LARGE_TB;
+
+    public static final RocketType[] VALUES = values();
   }
 
-  public static HIMARSRocket[] itemTypes = new HIMARSRocket[RocketType.values().length];
+  public static HIMARSRocket[] itemTypes = new HIMARSRocket[RocketType.VALUES.length];
 
   public ItemAmmoHIMARS(String s) {
     this.setTranslationKey(s);
@@ -87,7 +89,7 @@ public class ItemAmmoHIMARS extends Item implements IMetaItemTesr {
   public void addInformation(
       ItemStack stack, World worldIn, @NotNull List<String> list, @NotNull ITooltipFlag flagIn) {
 
-    RocketType type = RocketType.values()[stack.getItemDamage()];
+    RocketType type = RocketType.VALUES[stack.getItemDamage()];
     switch (type) {
       case SMALL:
         list.add(TextFormatting.YELLOW + "Strength: 20");

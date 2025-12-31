@@ -48,7 +48,7 @@ public class BlockMutatorDebris implements IBlockMutator {
 	public void mutatePost(ExplosionVNT explosion, BlockPos pos) {
 		World world = explosion.world;
 
-		for (EnumFacing dir : EnumFacing.values()) {
+		for (EnumFacing dir : EnumFacing.VALUES) {
 			IBlockState state = world.getBlockState(pos.offset(dir));
 			Block adjacentBlock = state.getBlock();
 

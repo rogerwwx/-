@@ -194,7 +194,7 @@ public class PollutionHandler {
                     int z = chunk.getKey().z;
                     PollutionData data = chunk.getValue();
 
-                    float[] pollutionForNeightbors = new float[PollutionType.values().length];
+                    float[] pollutionForNeightbors = new float[PollutionType.VALUES.length];
                     int S = PollutionType.SOOT.ordinal();
                     int H = PollutionType.HEAVYMETAL.ordinal();
                     int P = PollutionType.POISON.ordinal();
@@ -329,21 +329,21 @@ public class PollutionHandler {
     }
 
     public static class PollutionData {
-        public float[] pollution = new float[PollutionType.values().length];
+        public float[] pollution = new float[PollutionType.VALUES.length];
 
         public static PollutionData fromNBT(NBTTagCompound nbt) {
             PollutionData data = new PollutionData();
 
-            for(int i = 0; i < PollutionType.values().length; i++) {
-                data.pollution[i] = nbt.getFloat(PollutionType.values()[i].name().toLowerCase(Locale.US));
+            for(int i = 0; i < PollutionType.VALUES.length; i++) {
+                data.pollution[i] = nbt.getFloat(PollutionType.VALUES[i].name().toLowerCase(Locale.US));
             }
 
             return data;
         }
 
         public void toNBT(NBTTagCompound nbt) {
-            for(int i = 0; i < PollutionType.values().length; i++) {
-                nbt.setFloat(PollutionType.values()[i].name().toLowerCase(Locale.US), pollution[i]);
+            for(int i = 0; i < PollutionType.VALUES.length; i++) {
+                nbt.setFloat(PollutionType.VALUES[i].name().toLowerCase(Locale.US), pollution[i]);
             }
         }
     }
@@ -353,6 +353,8 @@ public class PollutionHandler {
         POISON("trait.ptype.poison"),
         HEAVYMETAL("trait.ptype.heavymetal"),
         FALLOUT("trait.ptype.fallout");
+
+        public static final PollutionType[] VALUES = values();
 
         public String name;
 

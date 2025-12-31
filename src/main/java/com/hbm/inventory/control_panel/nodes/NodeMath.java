@@ -20,7 +20,7 @@ public class NodeMath extends Node {
 			}
 			return null;
 		}, () -> op.name);
-		for(Operation op : Operation.values()){
+		for(Operation op : Operation.VALUES){
 			opSelector.list.addItems(op.name);
 		}
 		this.otherElements.add(opSelector);
@@ -37,7 +37,7 @@ public class NodeMath extends Node {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tag, NodeSystem sys){
-		op = Operation.values()[tag.getInteger("op")%Operation.values().length];
+		op = Operation.VALUES[tag.getInteger("op")%Operation.VALUES.length];
 		super.readFromNBT(tag, sys);
 	}
 	
@@ -189,13 +189,15 @@ public class NodeMath extends Node {
 		CEIL("Ceil"),
 		ROUND("Round");
 
+        public static final Operation[] VALUES = values();
+
 		public String name;
 		private Operation(String name){
 			this.name = name;
 		}
 		
 		public static Operation getByName(String name){
-			for(Operation o : values()){
+			for(Operation o : Operation.VALUES){
 				if(o.name.equals(name)){
 					return o;
 				}

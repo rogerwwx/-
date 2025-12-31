@@ -101,7 +101,7 @@ public class HbmCapability {
 
 		public static final Callable<IHBMData> FACTORY = HBMData::new;
 		
-		private final boolean[] keysPressed = new boolean[EnumKeybind.values().length];
+		private final boolean[] keysPressed = new boolean[EnumKeybind.VALUES.length];
 		
 		public boolean enableBackpack = true;
 		public boolean enableHUD = true;
@@ -268,7 +268,7 @@ public class HbmCapability {
 		@Override
 		public NBTBase writeNBT(Capability<IHBMData> capability, IHBMData instance, EnumFacing side) {
 			NBTTagCompound tag = new NBTTagCompound();
-			for(EnumKeybind key : EnumKeybind.values()){
+			for(EnumKeybind key : EnumKeybind.VALUES){
 				tag.setBoolean(key.name(), instance.getKeyPressed(key));
 			}
             tag.setBoolean("hasReceivedBook", instance.hasReceivedBook());
@@ -283,7 +283,7 @@ public class HbmCapability {
 		@Override
 		public void readNBT(Capability<IHBMData> capability, IHBMData instance, EnumFacing side, NBTBase nbt) {
 			if(nbt instanceof NBTTagCompound tag){
-                for(EnumKeybind key : EnumKeybind.values()){
+                for(EnumKeybind key : EnumKeybind.VALUES){
 					instance.setKeyPressed(key, tag.getBoolean(key.name()));
 				}
                 instance.setReceivedBook(tag.getBoolean("hasReceivedBook"));

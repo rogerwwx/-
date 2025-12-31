@@ -74,7 +74,7 @@ public class FT_Polluting extends FluidTrait {
     public void deserializeJSON(JsonObject obj) {
         if(obj.has("release")) {
             JsonObject release = obj.get("release").getAsJsonObject();
-            for(PollutionHandler.PollutionType type : PollutionHandler.PollutionType.values()) {
+            for(PollutionHandler.PollutionType type : PollutionHandler.PollutionType.VALUES) {
                 if(release.has(type.name())) {
                     releaseMap.put(type, release.get(type.name()).getAsFloat());
                 }
@@ -82,7 +82,7 @@ public class FT_Polluting extends FluidTrait {
         }
         if(obj.has("burn")) {
             JsonObject release = obj.get("burn").getAsJsonObject();
-            for(PollutionHandler.PollutionType type : PollutionHandler.PollutionType.values()) {
+            for(PollutionHandler.PollutionType type : PollutionHandler.PollutionType.VALUES) {
                 if(release.has(type.name())) {
                     burnMap.put(type, release.get(type.name()).getAsFloat());
                 }

@@ -192,7 +192,7 @@ public class MachineICFController extends BlockBase implements ITileEntityProvid
 
         if (validCore) {
             assembly.put(pos, state);
-            for (EnumFacing facing : EnumFacing.values()) {
+            for (EnumFacing facing : EnumFacing.VALUES) {
                 floodFill(world, pos.offset(facing), player);
             }
             return;

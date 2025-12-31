@@ -232,7 +232,7 @@ public class BlockWandJigsaw extends BlockContainerBakeable implements IBlockSid
             IModel retexturedModel = baseModel.retexture(textureMap.build());
             IBakedModel[] models = new IBakedModel[6];
 
-            for (EnumFacing facing : EnumFacing.values()) {
+            for (EnumFacing facing : EnumFacing.VALUES) {
                 IBakedModel baked = retexturedModel.bake(
                         ModelRotation.getModelRotation(BlockBakeFrame.getXRotationForFacing(facing), BlockBakeFrame.getYRotationForFacing(facing)),
                         DefaultVertexFormats.BLOCK,
@@ -244,7 +244,7 @@ public class BlockWandJigsaw extends BlockContainerBakeable implements IBlockSid
             ModelResourceLocation inv = new ModelResourceLocation(Objects.requireNonNull(getRegistryName()), "inventory");
             event.getModelRegistry().putObject(inv, models[EnumFacing.SOUTH.getIndex()]);
 
-            for (EnumFacing facing : EnumFacing.values()) {
+            for (EnumFacing facing : EnumFacing.VALUES) {
                 ModelResourceLocation worldLoc = new ModelResourceLocation(Objects.requireNonNull(getRegistryName()), "facing=" + facing.getName());
                 event.getModelRegistry().putObject(worldLoc, models[facing.getIndex()]);
             }

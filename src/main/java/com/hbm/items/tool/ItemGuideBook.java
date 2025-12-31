@@ -50,7 +50,7 @@ public class ItemGuideBook extends Item implements IGUIProvider {
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(@NotNull CreativeTabs tab, @NotNull NonNullList<ItemStack> items){
 		if(tab == CreativeTabs.SEARCH || tab == this.getCreativeTab())
-			for(int i = 1; i < BookType.values().length; i++)
+			for(int i = 1; i < BookType.VALUES.length; i++)
 				items.add(new ItemStack(this, 1, i));
 	}
 
@@ -65,7 +65,9 @@ public class ItemGuideBook extends Item implements IGUIProvider {
 		RBMK("book.rbmk.cover", 1.5F, statFacRBMK()),
 		MSWORD("book.msword.cover", 1.5F, statFacMSword()),
 		HADRON("book.error.cover", 1.5F, statFacHadron()),
-		STARTER("book.starter.cover", 1.5F, statFacStarter());;
+		STARTER("book.starter.cover", 1.5F, statFacStarter());
+
+        public static final BookType[] VALUES = values();
 
 		public final List<GuidePage> pages;
 		public final float titleScale;
@@ -78,7 +80,7 @@ public class ItemGuideBook extends Item implements IGUIProvider {
 		}
 
 		public static BookType getType(int i) {
-			return BookType.values()[Math.abs(i) % BookType.values().length];
+			return BookType.VALUES[Math.abs(i) % BookType.VALUES.length];
 		}
 	}
 

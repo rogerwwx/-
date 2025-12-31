@@ -47,6 +47,8 @@ public class FT_Combustible extends FluidTrait {
 		HIGH("trait.combustable.high"),		//diesel, gasoline							< HP engine
 		AERO("trait.combustable.avi"),	//kerosene and other light aviation fuels	< turbofan
 		GAS("trait.combustable.gas");		//fuel gasses like NG, PG and syngas		< gas turbine
+
+        public static final FuelGrade[] VALUES = values();
 		
 		private String grade;
 		

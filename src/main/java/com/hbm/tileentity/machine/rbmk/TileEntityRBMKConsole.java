@@ -203,7 +203,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
                 if (ordinal == -1) {
                     this.columns[i] = null;
                 } else {
-                    this.columns[i] = new RBMKColumn(ColumnType.values()[ordinal], BufferUtil.readNBT(buf));
+                    this.columns[i] = new RBMKColumn(ColumnType.VALUES[ordinal], BufferUtil.readNBT(buf));
                 }
             }
 
@@ -214,7 +214,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
             }
         } else {
             for (RBMKScreen screen : this.screens) {
-                screen.type = ScreenType.values()[buf.readByte()];
+                screen.type = ScreenType.VALUES[buf.readByte()];
             }
         }
     }
@@ -247,7 +247,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
         if (data.hasKey("toggle")) {
             int slot = data.getByte("toggle");
             int next = this.screens[slot].type.ordinal() + 1;
-            ScreenType type = ScreenType.values()[next % ScreenType.values().length];
+            ScreenType type = ScreenType.VALUES[next % ScreenType.VALUES.length];
             this.screens[slot].type = type;
         }
 
@@ -325,7 +325,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
         this.targetZ = nbt.getInteger("tZ");
 
         for (int i = 0; i < this.screens.length; i++) {
-            this.screens[i].type = ScreenType.values()[nbt.getByte("t" + i)];
+            this.screens[i].type = ScreenType.VALUES[nbt.getByte("t" + i)];
             this.screens[i].columns = Arrays.stream(nbt.getIntArray("s" + i)).boxed().toArray(Integer[]::new);
         }
         rotation = nbt.getByte("rotation");
@@ -538,7 +538,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
                 for (int j = -7; j <= 7; j++) {
                     TileEntity te = world.getTileEntity(new BlockPos(targetX + i, targetY, targetZ + j));
                     if (te instanceof TileEntityRBMKControlManual rod) {
-                        if (rod.color == RBMKColor.values()[color]) {
+                        if (rod.color == RBMKColor.VALUES[color]) {
                             rod.startingLevel = rod.level;
                             new_level = Math.min(1, Math.max(0, new_level));
                             rod.setTarget(new_level);
@@ -563,7 +563,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
         if (new_color >= 0 && new_color <= 4) {
             TileEntity te = world.getTileEntity(new BlockPos(targetX + x, targetY, targetZ + y));
             if (te instanceof TileEntityRBMKControlManual rod) {
-                rod.color = RBMKColor.values()[new_color];
+                rod.color = RBMKColor.VALUES[new_color];
                 te.markDirty();
                 return new Object[]{};
             }
@@ -594,6 +594,8 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
     public enum ColumnType {
         BLANK(0), FUEL(10), FUEL_SIM(90), CONTROL(20), CONTROL_AUTO(30), BOILER(40), MODERATOR(50), ABSORBER(60), REFLECTOR(70), OUTGASSER(80), BREEDER(100), STORAGE(110), COOLER(120), HEATEX(130);
 
+        public static final ColumnType[] VALUES = values();
+
         public final int offset;
 
         ColumnType(int offset) {
@@ -603,6 +605,8 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 
     public enum ScreenType {
         NONE(0), COL_TEMP(18), ROD_EXTRACTION(2 * 18), FUEL_DEPLETION(3 * 18), FUEL_POISON(4 * 18), FUEL_TEMP(5 * 18);
+
+        public static final ScreenType[] VALUES = values();
 
         public final int offset;
 
@@ -660,8 +664,8 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
                 case CONTROL:
                     if (this.data.hasKey("color")) {
                         short col = this.data.getShort("color");
-                        if (col >= 0 && col < RBMKColor.values().length) {
-                            stats.add(TextFormatting.YELLOW + I18nUtil.resolveKey("rbmk.control." + RBMKColor.values()[col].name().toLowerCase(Locale.US)));
+                        if (col >= 0 && col < RBMKColor.VALUES.length) {
+                            stats.add(TextFormatting.YELLOW + I18nUtil.resolveKey("rbmk.control." + RBMKColor.VALUES[col].name().toLowerCase(Locale.US)));
                         }
                     }
                 case CONTROL_AUTO:

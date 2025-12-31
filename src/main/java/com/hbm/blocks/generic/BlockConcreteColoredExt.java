@@ -17,8 +17,8 @@ public class BlockConcreteColoredExt extends BlockEnumMeta {
 
     @Override
     protected BlockBakeFrame[] generateBlockFrames(String registryName) {
-        BlockBakeFrame[] frames = new BlockBakeFrame[EnumConcreteType.values().length];
-        for (EnumConcreteType type : EnumConcreteType.values()) {
+        BlockBakeFrame[] frames = new BlockBakeFrame[EnumConcreteType.VALUES.length];
+        for (EnumConcreteType type : EnumConcreteType.VALUES) {
             String name = registryName + "." + type.name().toLowerCase(Locale.US);
             if (type == EnumConcreteType.MACHINE_STRIPE) {
                 String machine = registryName + "." + EnumConcreteType.MACHINE.name().toLowerCase(Locale.US);
@@ -44,6 +44,8 @@ public class BlockConcreteColoredExt extends BlockEnumMeta {
         PINK,
         HAZARD,
         SAND,
-        BRONZE
+        BRONZE;
+
+        public static final EnumConcreteType[] VALUES = values();
     }
 }
