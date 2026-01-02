@@ -541,12 +541,14 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 		tankNew.readFromNBT(compound, "oil");
 		if(compound.hasKey("tank")) compound.removeTag("tank");
 		isOn = compound.getBoolean("isOn");
+        power = compound.getLong("power");
 	}
 
 	@Override
 	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		tankNew.writeToNBT(compound, "oil");
 		compound.setBoolean("isOn", isOn);
+		compound.setLong("power", power);
 		return super.writeToNBT(compound);
 	}
 

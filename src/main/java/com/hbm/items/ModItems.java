@@ -1335,12 +1335,8 @@ public class ModItems {
     public static final Item bomb_waffle = new ItemFoodBase(20, 0, true, "bomb_waffle").setCreativeTab(MainRegistry.consumableTab);
     public static final Item schnitzel_vegan = new ItemFoodBase(3, 6, true, "schnitzel_vegan").setCreativeTab(MainRegistry.consumableTab);
     public static final Item cotton_candy = new ItemFoodBase(5, 0, true, "cotton_candy").setCreativeTab(MainRegistry.consumableTab).setFull3D();
-    public static final Item apple_lead = new ItemFoodBase(3, 0, true, "apple_lead").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
-    public static final Item apple_lead1 = new ItemFoodBase(5, 0, true, "apple_lead1", "apple_lead").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
-    public static final Item apple_lead2 = new ItemFoodBase(10, 0, true, "apple_lead2", "apple_lead").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
-    public static final Item apple_schrabidium = new ItemFoodBase(5, 25, true, "apple_schrabidium").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
-    public static final Item apple_schrabidium1 = new ItemFoodBase(10, 50, true, "apple_schrabidium1", "apple_schrabidium").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
-    public static final Item apple_schrabidium2 = new ItemFoodBase(20, 100, true, "apple_schrabidium2", "apple_schrabidium").setAlwaysEdible().setCreativeTab(MainRegistry.consumableTab);
+    public static final Item apple_lead = new ItemAppleSchrabidium(5, 0, false, "apple_lead").setCreativeTab(MainRegistry.consumableTab);
+    public static final Item apple_schrabidium = new ItemAppleSchrabidium(20, 100, false, "apple_schrabidium").setCreativeTab(MainRegistry.consumableTab);
     public static final Item tem_flakes = new ItemTemFlakes(0, 0, false, "tem_flakes").setCreativeTab(MainRegistry.consumableTab);
     public static final Item glowing_stew = new ItemFoodSoup(6, "glowing_stew").setCreativeTab(MainRegistry.consumableTab);
     public static final Item balefire_scrambled = new ItemFoodSoup(30, "balefire_scrambled").setCreativeTab(MainRegistry.consumableTab);
