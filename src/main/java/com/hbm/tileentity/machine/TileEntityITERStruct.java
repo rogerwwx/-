@@ -118,12 +118,4 @@ public class TileEntityITERStruct {
 		}
 	};
 
-	public AxisAlignedBB getRenderBoundingBox() {
-		return TileEntity.INFINITE_EXTENT_AABB;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public double getMaxRenderDistanceSquared() {
-		return 65536.0D;
-	}
 }
