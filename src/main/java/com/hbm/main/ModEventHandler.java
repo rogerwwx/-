@@ -1259,7 +1259,7 @@ public class ModEventHandler {
                     player.sendMessage(new TextComponentString("Click ")
                             .setStyle(new Style().setColor(TextFormatting.YELLOW))
                             .appendSibling(new TextComponentString("[here]")
-                                    .setStyle(new Style().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Warfactory-Offical/Hbm-s-Nuclear-Tech-CE/releases")).setUnderlined(Boolean.TRUE).setColor(TextFormatting.RED))
+                                    .setStyle(new Style().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://modrinth.com/mod/ntm-ce/versions")).setUnderlined(Boolean.TRUE).setColor(TextFormatting.RED))
                             ).appendSibling(new TextComponentString(" to download!").setStyle(new Style().setColor(TextFormatting.YELLOW)))
                     );
                 }
