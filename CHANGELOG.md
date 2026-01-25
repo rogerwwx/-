@@ -10,6 +10,7 @@ introduced to fix this issue, `hbm:concrete_colored_stairs` and `hbm:concrete_co
 - Fixed VAO crashing the game on Apple devices when using Cleanroom / lwjgl3ify by using VBO instead.
 - Fixed waste earth having missing bottom texture
 - Fixed Capacitor placement direction
+- Fixed a 1.5.2.0 regression that caused certain machines to be unable to subscribe to networks
 ### Changes
 - Made it possible to change fluid type of Heat Exchanger by shift-clicking with a fluid identifier
 - The game will now crash when an incompatible NTM: Extended Edition mod is detected.

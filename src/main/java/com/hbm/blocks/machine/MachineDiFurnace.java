@@ -172,21 +172,16 @@ public class MachineDiFurnace extends BlockContainer {
 
 	public static void updateBlockState(boolean isProcessing, boolean ext, World world, BlockPos pos) {
 		IBlockState cur = world.getBlockState(pos);
-		TileEntity te = world.getTileEntity(pos);
-		Block target = isProcessing ? ModBlocks.machine_difurnace_on : ModBlocks.machine_difurnace_off;
+        Block target = isProcessing ? ModBlocks.machine_difurnace_on : ModBlocks.machine_difurnace_off;
 		IBlockState ns = (cur.getBlock() == target) ? cur : target.getDefaultState();
 		if (cur.getPropertyKeys().contains(FACING) && ns.getPropertyKeys().contains(FACING))
 			ns = ns.withProperty(FACING, cur.getValue(FACING));
 		if (ns.getPropertyKeys().contains(EXT)) ns = ns.withProperty(EXT, ext);
 		boolean oldKeep = keepInventory;
-		keepInventory = true;
 		if (ns != cur) {
+			keepInventory = true;
 			world.setBlockState(pos, ns, 2);
-		}
-		keepInventory = oldKeep;
-		if (te != null) {
-			te.validate();
-			world.setTileEntity(pos, te);
+			keepInventory = oldKeep;
 		}
 	}
 
