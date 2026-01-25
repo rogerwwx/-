@@ -1906,9 +1906,8 @@ public class ResourceManager {
         transition_seal_anim = ColladaLoader.loadAnim(24040, new ResourceLocation(Tags.MODID, "models/doors/seal.dae"));
     }
 
+    // this method is called at ModelBakeEvent, which is guaranteed to be posted on client main thread!
     public static void init() {
-
-
         LensVisibilityHandler.checkSphere = new WavefrontObjDisplayList(new HFRWavefrontObject(new ResourceLocation(Tags.MODID, "models/diffractionspikechecker.obj"))).getListForName("sphere");
         Minecraft.getMinecraft().getTextureManager().bindTexture(fresnel_ms);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
@@ -1920,12 +1919,13 @@ public class ResourceManager {
         //Drillgon discovered that it messes with GL context
         pauseSplash();
         if (!WaveFrontObjectVAO.uploaded) {
-            Minecraft.getMinecraft().addScheduledTask(() -> WaveFrontObjectVAO.allVBOs.forEach(WaveFrontObjectVAO::uploadModels));
+            for (WaveFrontObjectVAO allVBO : WaveFrontObjectVAO.allVBOs) {
+                allVBO.uploadModels();
+            }
             WaveFrontObjectVAO.uploaded = true;
         }
         resumeSplash();
         KeypadClient.load();
-
     }
 
     private static void pauseSplash() {

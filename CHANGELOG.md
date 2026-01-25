@@ -4,10 +4,15 @@
 > Previous public release: 1.5.2.0
 
 ### Breaking Changes
-
+- Fixed colored concrete stairs losing their color when the chunk is unloaded. For technical reasons new blocks must be
+introduced to fix this issue, `hbm:concrete_colored_stairs` and `hbm:concrete_colored_ext_stairs` has been removed.
 ### Fixes
+- Fixed VAO crashing the game on Apple devices when using Cleanroom / lwjgl3ify by using VBO instead.
+- Fixed waste earth having missing bottom texture
+- Fixed Capacitor placement direction
 ### Changes
 - Made it possible to change fluid type of Heat Exchanger by shift-clicking with a fluid identifier
+- The game will now crash when an incompatible NTM: Extended Edition mod is detected.
 ### New Features
 ### Performance
 

@@ -32,12 +32,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.hbm.blocks.BlockEnums.OreType;
 import static com.hbm.blocks.OreEnumUtil.OreEnum;
@@ -120,8 +122,40 @@ public class ModBlocks {
     public static final Block cmb_brick_reinforced_stairs = new BlockGenericStairs(cmb_brick_reinforced, "cmb_brick_reinforced_stairs", "cmb_brick_reinforced", 0).setCreativeTab(MainRegistry.blockTab).setHardness(25.0F).setResistance(45000.0F);
     public static final Block concrete_stairs = new BlockGenericStairs(concrete, "concrete_stairs", "concrete_tile", 0).setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(94.0F);
     public static final Block concrete_smooth_stairs = new BlockGenericStairs(concrete_smooth, "concrete_smooth_stairs", "concrete", 0).setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(94.0F);
-    public static final Block concrete_colored_stairs = new BlockConcreteColoredStairs().setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(94.0F);
-    public static final Block concrete_colored_ext_stairs = new BlockConcreteColoredExtStairs().setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(94.0F);
+    public static final Block[] concrete_colored_stairs = makeConcreteStairs();
+    public static final Block[] concrete_colored_ext_stairs = makeConcreteExtStairs();
+
+    private static Block[] makeConcreteStairs() {
+        Block[] blocks = new Block[16];
+        for (int i = 0; i < 16; i++) {
+            String color = EnumDyeColor.byMetadata(i).getName();
+            String name = "concrete_colored_stairs_" + color;
+            String texture = "concrete_" + color;
+            blocks[i] = new BlockGenericStairs(concrete_colored, name, texture, i)
+                    .setTranslationKey("concrete_colored_stairs." + color)
+                    .setCreativeTab(MainRegistry.blockTab)
+                    .setHardness(15.0F)
+                    .setResistance(94.0F);
+        }
+        return blocks;
+    }
+
+    private static Block[] makeConcreteExtStairs() {
+        var values = BlockConcreteColoredExt.EnumConcreteType.VALUES;
+        Block[] blocks = new Block[values.length];
+        for (int i = 0; i < values.length; i++) {
+            var type = values[i];
+            String name = "concrete_colored_ext_stairs_" + type.name().toLowerCase(Locale.US);
+            String texture = "concrete_colored_ext." + type.name().toLowerCase(Locale.US);
+            blocks[i] = new BlockGenericStairs(concrete_colored_ext, name, texture, i)
+                    .setTranslationKey("concrete_colored_ext_stairs." + type.name().toLowerCase(Locale.US))
+                    .setCreativeTab(MainRegistry.blockTab)
+                    .setHardness(15.0F)
+                    .setResistance(94.0F);
+        }
+        return blocks;
+    }
+
     public static final Block concrete_asbestos_stairs = new BlockGenericStairs(concrete_asbestos, "concrete_asbestos_stairs", "concrete_asbestos", 0).setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(94.0F);
     public static final Block ducrete_smooth_stairs = new BlockGenericStairs(ducrete_smooth, "ducrete_smooth_stairs", "ducrete_smooth", 0).setCreativeTab(MainRegistry.blockTab).setHardness(20.0F).setResistance(360.0F);
     public static final Block ducrete_stairs = new BlockGenericStairs(ducrete, "ducrete_stairs", "ducrete", 0).setCreativeTab(MainRegistry.blockTab).setHardness(20.0F).setResistance(360.0F);

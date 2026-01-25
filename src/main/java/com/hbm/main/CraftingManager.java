@@ -1171,23 +1171,26 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(block, 1), slab, slab );
 	}
 
-	public static void addSlabStairColConcrete(Block stair, Block block){
+	public static void addSlabStairColConcrete(Block[] stairs, Block block){
 		for(int meta = 0; meta < 16; meta++) {
 			Block slab = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("hbm", "concrete_" + EnumDyeColor.byMetadata(meta).getName() + "_slab"));
+			Block stair = stairs[meta];
 			if(slab != null){
-				addRecipeAuto(new ItemStack(slab, 6, 0), "###", '#', new ItemStack(block, 1, meta));			addRecipeAuto(new ItemStack(stair, 4, meta), "#  ", "## ", "###", '#', new ItemStack(slab, 1, 0));
+				addRecipeAuto(new ItemStack(slab, 6, 0), "###", '#', new ItemStack(block, 1, meta));
+				addRecipeAuto(new ItemStack(stair, 4), "#  ", "## ", "###", '#', new ItemStack(slab, 1, 0));
 				addShapelessAuto(new ItemStack(block, 1, meta), new ItemStack(slab, 1, meta), new ItemStack(slab, 1, 0));
 			}
-			addRecipeAuto(new ItemStack(stair, 8, meta), "#  ", "## ", "###", '#', new ItemStack(block, 1, meta));
-			addShapelessAuto(new ItemStack(block, 3, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta));
+			addRecipeAuto(new ItemStack(stair, 8), "#  ", "## ", "###", '#', new ItemStack(block, 1, meta));
+			addShapelessAuto(new ItemStack(block, 3, meta), new ItemStack(stair, 1), new ItemStack(stair, 1), new ItemStack(stair, 1), new ItemStack(stair, 1));
 
 		}
 	}
 
-	public static void addStairColorExt(Block stair, Block block){
-		for(int meta = 0; meta < 8; meta++) {
-			addRecipeAuto(new ItemStack(stair, 8, meta), "#  ", "## ", "###", '#', new ItemStack(block, 1, meta));
-			addShapelessAuto(new ItemStack(block, 3, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta), new ItemStack(stair, 1, meta));
+	public static void addStairColorExt(Block[] stairs, Block block){
+		for(int meta = 0; meta < stairs.length; meta++) {
+			Block stair = stairs[meta];
+			addRecipeAuto(new ItemStack(stair, 8), "#  ", "## ", "###", '#', new ItemStack(block, 1, meta));
+			addShapelessAuto(new ItemStack(block, 3, meta), new ItemStack(stair, 1), new ItemStack(stair, 1), new ItemStack(stair, 1), new ItemStack(stair, 1));
 		}
 	}
 

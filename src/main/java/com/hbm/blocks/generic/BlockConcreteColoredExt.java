@@ -36,6 +36,7 @@ public class BlockConcreteColoredExt extends BlockEnumMeta<BlockConcreteColoredE
         }
         return frames;
     }
+
     public enum EnumConcreteType {
         MACHINE,
         MACHINE_STRIPE,
