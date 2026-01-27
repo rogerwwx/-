@@ -3,6 +3,7 @@ package com.hbm.tileentity.machine.storage;
 import com.hbm.api.energymk2.*;
 import com.hbm.handler.CompatHandler;
 import com.hbm.interfaces.IControlReceiver;
+import com.hbm.interfaces.ICopiable;
 import com.hbm.lib.DirPos;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
@@ -21,13 +22,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "opencomputers")
 public abstract class TileEntityBatteryBase extends TileEntityMachineBase implements ITickable, IEnergyConductorMK2, IEnergyProviderMK2,
-        IEnergyReceiverMK2, IControlReceiver, IGUIProvider, SimpleComponent, CompatHandler.OCComponent {
+        IEnergyReceiverMK2, IControlReceiver, IGUIProvider, SimpleComponent, CompatHandler.OCComponent, ICopiable {
 
     public byte lastRedstone = 0;
     public long prevPowerState = 0;
@@ -275,5 +277,21 @@ public abstract class TileEntityBatteryBase extends TileEntityMachineBase implem
     @Optional.Method(modid = "opencomputers")
     public Object[] getInfo(Context context, Arguments args) {
         return new Object[] {getPower(), getMaxPower(), redLow, redHigh, getPriority().ordinal()-1};
+    }
+
+    @Override
+    public NBTTagCompound getSettings(World world, int x, int y, int z) {
+        NBTTagCompound data = new NBTTagCompound();
+        data.setShort("redLow", redLow);
+        data.setShort("redHigh", redHigh);
+        data.setByte("priority", (byte) this.priority.ordinal());
+        return data;
+    }
+
+    @Override
+    public void pasteSettings(NBTTagCompound nbt, int index, World world, EntityPlayer player, int x, int y, int z) {
+        if(nbt.hasKey("redLow")) this.redLow = nbt.getShort("redLow");
+        if(nbt.hasKey("redHigh")) this.redHigh = nbt.getShort("redHigh");
+        if(nbt.hasKey("priority")) this.priority = EnumUtil.grabEnumSafely(ConnectionPriority.values(), nbt.getByte("priority"));
     }
 }
