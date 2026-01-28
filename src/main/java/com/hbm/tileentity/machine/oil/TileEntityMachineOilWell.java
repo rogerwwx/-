@@ -7,9 +7,13 @@ import com.hbm.interfaces.AutoRegister;
 import com.hbm.inventory.container.ContainerMachineOilWell;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.gui.GUIMachineOilWell;
+import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.IConfigurableMachine;
+import com.hbm.tileentity.IUpgradeInfoProvider;
+import com.hbm.util.BobMathUtil;
+import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
@@ -20,34 +24,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.IOException;
+import java.util.List;
 
 @AutoRegister
 public class TileEntityMachineOilWell extends TileEntityOilDrillBase {
 
-	// private static final int[] slots_top = new int[] {1};
-	// private static final int[] slots_bottom = new int[] {2, 0};
-	// private static final int[] slots_side = new int[] {0};
 
 	protected static int maxPower = 100_000;
 	protected static int consumption = 100;
 	protected static int delay = 50;
 	protected static int oilPerDeposit = 500;
-	protected static int oilPerDunaDeposit = 200;
 	protected static int gasPerDepositMin = 100;
 	protected static int gasPerDepositMax = 500;
 	protected static double drainChance = 0.05D;
-	protected static double drainChanceDuna = 0.1D;
-
-	// Gas from pure natgas deposits
-	protected static int gasPerDeposit = 500;
-	protected static int petgasPerDepositMin = 10;
-	protected static int petgasPerDepositMax = 100;
 
 
 	@Override
@@ -166,6 +162,7 @@ public class TileEntityMachineOilWell extends TileEntityOilDrillBase {
 		drainChance = IConfigurableMachine.grab(obj, "D:drainChance", drainChance);
 	}
 
+
 	@Override
 	public void writeConfig(JsonWriter writer) throws IOException {
 		writer.name("I:powerCap").value(maxPower);
@@ -176,6 +173,7 @@ public class TileEntityMachineOilWell extends TileEntityOilDrillBase {
 		writer.name("I:gasPerDepositMax").value(gasPerDepositMax);
 		writer.name("D:drainChance").value(drainChance);
 	}
+
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -192,5 +190,25 @@ public class TileEntityMachineOilWell extends TileEntityOilDrillBase {
 	@SideOnly(Side.CLIENT)
 	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIMachineOilWell(player.inventory, this);
+	}
+
+
+	@Override
+	public void provideInfo(ItemMachineUpgrade.UpgradeType type, int level, List<String> info, boolean extendedInfo) {
+		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_well));
+		if(type == ItemMachineUpgrade.UpgradeType.SPEED) {
+			info.add(TextFormatting.GREEN + I18nUtil.resolveKey(IUpgradeInfoProvider.KEY_DELAY, "-" + (level * 25) + "%"));
+			info.add(TextFormatting.RED + I18nUtil.resolveKey(IUpgradeInfoProvider.KEY_CONSUMPTION, "+" + (level * 25) + "%"));
+		}
+		if(type == ItemMachineUpgrade.UpgradeType.POWER) {
+			info.add(TextFormatting.GREEN + I18nUtil.resolveKey(IUpgradeInfoProvider.KEY_CONSUMPTION, "-" + (level * 25) + "%"));
+			info.add(TextFormatting.RED + I18nUtil.resolveKey(IUpgradeInfoProvider.KEY_DELAY, "+" + (level * 10) + "%"));
+		}
+		if(type == ItemMachineUpgrade.UpgradeType.AFTERBURN) {
+			info.add(TextFormatting.GREEN + I18nUtil.resolveKey(IUpgradeInfoProvider.KEY_BURN, level * 10, level * 50));
+		}
+		if(type == ItemMachineUpgrade.UpgradeType.OVERDRIVE) {
+			info.add((BobMathUtil.getBlink() ? TextFormatting.RED : TextFormatting.DARK_GRAY) + "YES");
+		}
 	}
 }
