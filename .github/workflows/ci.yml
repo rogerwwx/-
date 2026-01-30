@@ -24,18 +24,13 @@ jobs:
         with:
           distribution: graalvm
           java-version: '25'
-
-      # 新增缓存步骤
-      - name: Cache Gradle & Minecraft
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.gradle/minecraft
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle*
+            **/buildscript.properties
+            **/gradle-wrapper.properties
+            **/gradle.lockfile
+            src/main/resources/hbm_at.cfg
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -55,14 +50,19 @@ jobs:
       - name: Run server
         run: |
           set -euo pipefail
+
           mkdir -p run/server
           echo "eula=true" > run/server/eula.txt
+
+          # Set a constant seed with a village at spawn
           printf "level-seed=-6202107849386030209\nonline-mode=true\n" > run/server/server.properties
+
           echo "stop" > run/server/stop.txt
           set +e
           timeout 120s ./gradlew runServer --no-daemon --stacktrace < run/server/stop.txt 2>&1 | tee server.log
           code=${PIPESTATUS[0]}
           set -e
+
           if [ "$code" -ne 0 ] && [ "$code" -ne 124 ]; then
             echo "runServer exited with code $code"
             exit "$code"
@@ -71,11 +71,15 @@ jobs:
       - name: Validate server run
         run: |
           set -euo pipefail
+
           RUNDIR="run/server"
           CRASH="crash-reports"
           SERVERLOG="$RUNDIR/logs/latest.log"
+
           shopt -s nullglob
+
           crash_reports=("$RUNDIR/$CRASH/crash"*.txt)
+
           if [ "${#crash_reports[@]}" -gt 0 ]; then
             latest_crash_report="${crash_reports[-1]}"
             {
@@ -84,24 +88,42 @@ jobs:
             } >&2
             exit 1
           fi
+
           if [ -f "$SERVERLOG" ]; then
             if grep -qF 'Fatal errors were detected' "$SERVERLOG"; then
-              { printf 'Fatal errors detected:\n'; cat "$SERVERLOG"; } >&2
+              {
+                printf 'Fatal errors detected:\n'
+                cat "$SERVERLOG"
+              } >&2
               exit 1
             fi
-            if grep -qF 'The state engine was in incorrect state ERRORED and forced into state SERVER_STOPPED' "$SERVERLOG"; then
-              { printf 'Server force stopped:\n'; cat "$SERVERLOG"; } >&2
+
+            if grep -qF 'The state engine was in incorrect state ERRORED and forced into state SERVER_STOPPED' \
+              "$SERVERLOG"; then
+              {
+                printf 'Server force stopped:\n'
+                cat "$SERVERLOG"
+              } >&2
               exit 1
             fi
+
             if grep -qF 'Exception stopping the server' "$SERVERLOG"; then
-              { printf "Server didn't shut down cleanly:\n"; cat "$SERVERLOG"; } >&2
+              {
+                printf "Server didn't shut down cleanly:\n"
+                cat "$SERVERLOG"
+              } >&2
               exit 1
             fi
+
             if ! grep -qP '.+Done \(.+\)\! For help, type "help" or "\?"' "$SERVERLOG"; then
-              { printf 'Server did not finish startup:\n'; cat "$SERVERLOG"; } >&2
+              {
+                printf 'Server did not finish startup:\n'
+                cat "$SERVERLOG"
+              } >&2
               exit 1
             fi
           else
             echo "No latest.log found at $SERVERLOG (server may not have fully started)."
           fi
+
           echo 'No crash reports detected'
