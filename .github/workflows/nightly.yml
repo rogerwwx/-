@@ -81,7 +81,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag -f $TAG
-          git remote set-url origin https://x-access-token:${{ secrets.ACTION }}@github.com/rogerwwx/你的仓库名.git
+          git remote set-url origin https://x-access-token:${{ secrets.ACTION }}@github.com/rogerwwx/HBM-CE.git
           git push --force origin $TAG
 
       - name: Create GitHub release
