@@ -2,7 +2,7 @@ name: Nightly Gradle Build
 
 on:
   schedule:
-    - cron: '0 0 * * *' #Runs daily at midnight
+    - cron: '0 0 * * *' # 每天午夜运行
   workflow_dispatch:
 
 concurrency:
@@ -12,6 +12,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 允许写入仓库内容（Release 用）
 
     steps:
       - name: Checkout code
@@ -72,14 +74,14 @@ jobs:
           if-no-files-found: error
 
       - name: Create nightly tag
-        id: tag
         run: |
           DATE=$(date +'%Y-%m-%d')
           TAG=nightly-$DATE
           echo "TAG=$TAG" >> "$GITHUB_ENV"
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag -f $TAG
+          git remote set-url origin https://x-access-token:${{ secrets.ACTION }}@github.com/rogerwwx/你的仓库名.git
           git push --force origin $TAG
 
       - name: Create GitHub release
@@ -94,9 +96,7 @@ jobs:
             - For bleeding-edge builds, use GitHub Actions artifacts. They could be unstable, use at your own risk.
             Commit: `${{ github.sha }}`
           files: |
-            build/libs/*-sources.jar
-            build/libs/*-dev.jar
-            build/libs/*-dev-java25.jar
+            build/libs/*-java25.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
