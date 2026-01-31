@@ -1180,6 +1180,7 @@ death.attack.gunGib=%1$s was blasted into pieces by %2$s
 death.attack.ice=%1$s was turned into a popsicle by %2$s
 death.attack.laser.item=%1$s was turned into ash by %2$s using %3$s
 death.attack.laser=%1$s was turned into ash by %2$s
+death.attack.bolter=%1$s fucking bolt
 death.attack.lead=%1$s died from lead poisoning
 death.attack.lunar=%1$s forgot to charge their vital organs
 death.attack.meteorite=%1$s was hit by a falling rock from outer space

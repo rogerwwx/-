@@ -32,46 +32,44 @@ public class XFactory75Bolt {
                 .setColor(SpentCasing.COLOR_CASE_BRASS)
                 .setScale(2F, 2F, 1.5F);
 
-        // 旧版伤害逻辑 lambda，只针对爆弹枪
-        // lambda，支持不同伤害
-        BiConsumer<EntityBulletBaseMK4, RayTraceResult> oldSchoolHit = (bullet, mop) -> {
+        BiConsumer<EntityBulletBaseMK4, RayTraceResult> FIXED_THREE_DAMAGE = (bullet, mop) -> {
             if (mop.typeOfHit != RayTraceResult.Type.ENTITY) return;
-            if (!(mop.entityHit instanceof EntityLivingBase)) return;
-            EntityLivingBase living = (EntityLivingBase) mop.entityHit;
-            if (!living.isEntityAlive()) return;
+            if (!(mop.entityHit instanceof EntityLivingBase living)) return;
 
-            // 计算伤害
-            float damage = bullet.config.damageMult; // 每种子弹的 damageMult 不同
-            float newHealth = Math.max(0, living.getHealth() - damage);
-            living.setHealth(newHealth);
+            // 先走原始伤害逻辑
+            BulletConfig.LAMBDA_STANDARD_ENTITY_HIT.accept(bullet, mop);
 
-            if (newHealth <= 0) living.onDeath(ModDamageSource.lead);
+            // 如果还活着，再额外扣 3 血
+            if (living.isEntityAlive()) {
+                float newHealth = Math.max(0, living.getHealth() - 2.0F);
+                living.setHealth(newHealth);
 
-            // 子弹消失
-            bullet.setDead();
+                // 如果血量归零，手动触发死亡
+                if (newHealth <= 0 && living.isEntityAlive()) {
+                    living.onDeath(ModDamageSource.bolter);
+                }
+            }
         };
 
 // 初始化三种弹药
         b75 = new BulletConfig()
                 .setItem(GunFactory.EnumAmmo.B75)
                 .setCasing(casing75.clone().register("b75"))
-                .setDamage(2.5F)        // 普通弹
-                .setArmorPiercing(0F)
-                .setOnEntityHit(oldSchoolHit);
+                .setOnEntityHit(FIXED_THREE_DAMAGE);
 
         b75_inc = new BulletConfig()
                 .setItem(GunFactory.EnumAmmo.B75_INC)
                 .setCasing(casing75.clone().register("b75inc"))
-                .setDamage(3.2F)      // 燃烧弹伤害高一点
+                .setDamage(0.8F)      // 燃烧弹伤害高一点
                 .setArmorPiercing(0.1F)
-                .setOnEntityHit(oldSchoolHit);
+                .setOnEntityHit(FIXED_THREE_DAMAGE);
 
         b75_exp = new BulletConfig()
                 .setItem(GunFactory.EnumAmmo.B75_EXP)
                 .setCasing(casing75.clone().register("b75exp"))
-                .setDamage(5F)      // 高爆伤害最大
+                .setDamage(1.5F)      // 高爆伤害最大
                 .setArmorPiercing(-0.25F)
-                .setOnEntityHit(oldSchoolHit);
+                .setOnEntityHit(FIXED_THREE_DAMAGE);
 
 
         ModItems.gun_bolter = new ItemGunBaseNT(ItemGunBaseNT.WeaponQuality.SPECIAL, "gun_bolter", new GunConfig()

@@ -57,7 +57,8 @@ public class HbmCorePlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        runtimeDeobfEnabled = (Boolean) data.get("runtimeDeobfuscationEnabled");
+        Object flag = data.get("runtimeDeobfuscationEnabled");
+        runtimeDeobfEnabled = flag instanceof Boolean && (Boolean) flag;
 
         if (System.getProperty("hbm.core.disablecrash") != null) {
             hardCrash = false;
@@ -79,8 +80,6 @@ public class HbmCorePlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
                 "mixins.render.json"
         );
     }
-
-    // ================= 工具方法 =================
 
     public static boolean runtimeDeobfEnabled() {
         return runtimeDeobfEnabled;

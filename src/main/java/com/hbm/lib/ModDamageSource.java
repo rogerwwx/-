@@ -50,6 +50,7 @@ public class ModDamageSource extends DamageSource {
     public static DamageSource overdose = (new DamageSource("overdose")).setDamageIsAbsolute().setDamageBypassesArmor();
     public static DamageSource microwave = (new DamageSource("microwave")).setDamageIsAbsolute().setDamageBypassesArmor();
     public static DamageSource nitan = (new DamageSource("nitan")).setDamageIsAbsolute().setDamageBypassesArmor().setDamageAllowedInCreativeMode();
+    public static DamageSource bolter = (new DamageSource("bolter")).setDamageIsAbsolute().setDamageBypassesArmor().setDamageAllowedInCreativeMode();
 
     public static final String s_bullet = "revolverBullet";
     public static final String s_emplacer = "chopperBullet";

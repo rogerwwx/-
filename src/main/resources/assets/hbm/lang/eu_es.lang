@@ -624,6 +624,7 @@ container.wasteDrum=Agortutako Erregai Igerilekuaren Danborra
 container.watzPowerplant=Watz Zentrala
 death.attack.acid=%1$s azidoan erori zen.
 death.attack.ams=%1$s giza zientziak oraindik izendatu ez dituen partikula hilgarrietan busti zen.
+death.attack.bolter=%1$s bolt
 death.attack.amsCore=%1$s singularitate baten sutan lurrundu zen.
 death.attack.asbestos=%1$s-ek konpentsazio ekonomikoa jasotzeko eskubidea du orain.
 death.attack.bang=%1$s zati txikitan lehertu da.
