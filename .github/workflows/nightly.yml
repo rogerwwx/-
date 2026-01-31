@@ -2,7 +2,7 @@ name: Nightly Gradle Build
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight
+    - cron: '0 0 * * *' # Runs daily at midnight 
   workflow_dispatch:
 
 concurrency:
@@ -64,8 +64,9 @@ jobs:
         with:
           name: nightly-artifacts
           path: |
-            build/libs/*-java25.jar
+            build/libs/*.jar
           if-no-files-found: error
+
 
       - name: Create nightly tag
         id: tag
@@ -90,9 +91,7 @@ jobs:
             - For bleeding-edge builds, use GitHub Actions artifacts. They could be unstable, use at your own risk.
             Commit: `${{ github.sha }}`
           files: |
-            build/libs/*-sources.jar
-            build/libs/*-dev.jar
-            build/libs/*-dev-java25.jar
+            build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
