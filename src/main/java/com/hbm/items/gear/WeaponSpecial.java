@@ -74,9 +74,8 @@ public class WeaponSpecial extends ItemSword {
 				target.setHealth(0);
 				target.onDeath(DamageSource.GENERIC);
 				target.getEntityData().setBoolean("Dead", true);
-				if (target instanceof EntityPlayerMP) {
-					EntityPlayerMP player = (EntityPlayerMP) target;
-					String deathText = player.getName() + " 在锤子的重击下变成了一摊薄饼";
+				if (target instanceof EntityPlayerMP player) {
+                    String deathText = player.getName() + " 在锤子的重击下变成了一摊薄饼";
 					GuiDeathPacket packet = new GuiDeathPacket(deathText);
 					PacketDispatcher.sendTo(packet, player);
 				}

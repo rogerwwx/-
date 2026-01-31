@@ -1,5 +1,6 @@
 package com.hbm.items.weapon.sedna.factory;
 
+import com.hbm.entity.projectile.EntityBulletBaseMK4;
 import com.hbm.items.ModItems;
 import com.hbm.items.weapon.sedna.BulletConfig;
 import com.hbm.items.weapon.sedna.GunConfig;
@@ -7,12 +8,16 @@ import com.hbm.items.weapon.sedna.ItemGunBaseNT;
 import com.hbm.items.weapon.sedna.Receiver;
 import com.hbm.items.weapon.sedna.mags.MagazineFullReload;
 import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.ModDamageSource;
 import com.hbm.particle.SpentCasing;
 import com.hbm.render.anim.sedna.BusAnimationSedna;
 import com.hbm.render.anim.sedna.BusAnimationSequenceSedna;
 import com.hbm.render.anim.sedna.HbmAnimationsSedna;
 import com.hbm.render.misc.RenderScreenOverlay;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.RayTraceResult;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -23,14 +28,51 @@ public class XFactory75Bolt {
     public static BulletConfig b75_exp;
 
     public static void init() {
-        SpentCasing casing75 = new SpentCasing(SpentCasing.CasingType.STRAIGHT).setColor(SpentCasing.COLOR_CASE_BRASS).setScale(2F, 2F, 1.5F);
+        SpentCasing casing75 = new SpentCasing(SpentCasing.CasingType.STRAIGHT)
+                .setColor(SpentCasing.COLOR_CASE_BRASS)
+                .setScale(2F, 2F, 1.5F);
 
-        b75 = new BulletConfig().setItem(GunFactory.EnumAmmo.B75)
-                .setCasing(casing75.clone().register("b75"));
-        b75_inc = new BulletConfig().setItem(GunFactory.EnumAmmo.B75_INC).setDamage(0.8F).setArmorPiercing(0.1F)
-                .setCasing(casing75.clone().register("b75inc"));
-        b75_exp = new BulletConfig().setItem(GunFactory.EnumAmmo.B75_EXP).setDamage(1.5F).setArmorPiercing(-0.25F)
-                .setCasing(casing75.clone().register("b75exp"));
+        // 旧版伤害逻辑 lambda，只针对爆弹枪
+        // lambda，支持不同伤害
+        BiConsumer<EntityBulletBaseMK4, RayTraceResult> oldSchoolHit = (bullet, mop) -> {
+            if (mop.typeOfHit != RayTraceResult.Type.ENTITY) return;
+            if (!(mop.entityHit instanceof EntityLivingBase)) return;
+            EntityLivingBase living = (EntityLivingBase) mop.entityHit;
+            if (!living.isEntityAlive()) return;
+
+            // 计算伤害
+            float damage = bullet.config.damageMult; // 每种子弹的 damageMult 不同
+            float newHealth = Math.max(0, living.getHealth() - damage);
+            living.setHealth(newHealth);
+
+            if (newHealth <= 0) living.onDeath(ModDamageSource.lead);
+
+            // 子弹消失
+            bullet.setDead();
+        };
+
+// 初始化三种弹药
+        b75 = new BulletConfig()
+                .setItem(GunFactory.EnumAmmo.B75)
+                .setCasing(casing75.clone().register("b75"))
+                .setDamage(2.5F)        // 普通弹
+                .setArmorPiercing(0F)
+                .setOnEntityHit(oldSchoolHit);
+
+        b75_inc = new BulletConfig()
+                .setItem(GunFactory.EnumAmmo.B75_INC)
+                .setCasing(casing75.clone().register("b75inc"))
+                .setDamage(3.2F)      // 燃烧弹伤害高一点
+                .setArmorPiercing(0.1F)
+                .setOnEntityHit(oldSchoolHit);
+
+        b75_exp = new BulletConfig()
+                .setItem(GunFactory.EnumAmmo.B75_EXP)
+                .setCasing(casing75.clone().register("b75exp"))
+                .setDamage(5F)      // 高爆伤害最大
+                .setArmorPiercing(-0.25F)
+                .setOnEntityHit(oldSchoolHit);
+
 
         ModItems.gun_bolter = new ItemGunBaseNT(ItemGunBaseNT.WeaponQuality.SPECIAL, "gun_bolter", new GunConfig()
                 .dura(3_000).draw(20).inspect(31).crosshair(RenderScreenOverlay.Crosshair.L_CIRCLE).smoke(LAMBDA_SMOKE)
