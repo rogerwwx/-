@@ -64,7 +64,7 @@ jobs:
         with:
           name: nightly-artifacts
           path: |
-            build/libs/*.jar
+            build/libs/*-java25.jar
           if-no-files-found: error
 
 
